@@ -1,113 +1,120 @@
-import Image from "next/image";
+"use client";
+  import Image from 'next/image';
+  import React, { useRef, useState } from "react";
+  import Navbar from "./components/navbar";
+  import Menu from "./components/menu";
+  import { Reveal } from "./components/reveal";
+  import { IoMail } from "react-icons/io5";
+  import { FaArrowRight, FaGithub, FaLinkedin } from "react-icons/fa";
+  import { motion, useScroll, useSpring } from "framer-motion";
+  
 
-export default function Home() {
-  return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <div className="z-10 max-w-5xl w-full items-center justify-between font-mono text-sm lg:flex">
-        <p className="fixed left-0 top-0 flex w-full justify-center border-b border-gray-300 bg-gradient-to-b from-zinc-200 pb-6 pt-8 backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit lg:static lg:w-auto  lg:rounded-xl lg:border lg:bg-gray-200 lg:p-4 lg:dark:bg-zinc-800/30">
-          Get started by editing&nbsp;
-          <code className="font-mono font-bold">app/page.js</code>
-        </p>
-        <div className="fixed bottom-0 left-0 flex h-48 w-full items-end justify-center bg-gradient-to-t from-white via-white dark:from-black dark:via-black lg:static lg:h-auto lg:w-auto lg:bg-none">
-          <a
-            className="pointer-events-none flex place-items-center gap-2 p-8 lg:pointer-events-auto lg:p-0"
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{" "}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className="dark:invert"
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
-        </div>
-      </div>
+  export default function Home() {
+    const { scrollYProgress } = useScroll();
+    const scaleX = useSpring(scrollYProgress, {
+      stiffness: 100,
+      damping: 30,
+      restDelta: 0.001,
+    });
 
-      <div className="relative flex place-items-center before:absolute before:h-[300px] before:w-full sm:before:w-[480px] before:-translate-x-1/2 before:rounded-full before:bg-gradient-radial before:from-white before:to-transparent before:blur-2xl before:content-[''] after:absolute after:-z-20 after:h-[180px] after:w-full sm:after:w-[240px] after:translate-x-1/3 after:bg-gradient-conic after:from-sky-200 after:via-blue-200 after:blur-2xl after:content-[''] before:dark:bg-gradient-to-br before:dark:from-transparent before:dark:to-blue-700 before:dark:opacity-10 after:dark:from-sky-900 after:dark:via-[#0141ff] after:dark:opacity-40 before:lg:h-[360px] z-[-1]">
-        <Image
-          className="relative dark:drop-shadow-[0_0_0.3rem_#ffffff70] dark:invert"
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
-      </div>
+    const [isOpen, setIsOpen] = useState(false);
+    const contactRef = useRef(null);
+    const homeRef = useRef(null);
 
-      <div className="mb-32 grid text-center lg:max-w-5xl lg:w-full lg:mb-0 lg:grid-cols-4 lg:text-left">
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Docs{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Find in-depth information about Next.js features and API.
-          </p>
-        </a>
+    const scrollTo = (ref) => {
+      ref.current?.scrollIntoView({ behavior: "smooth" });
+    };
 
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800 hover:dark:bg-opacity-30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Learn{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Learn about Next.js in an interactive course with&nbsp;quizzes!
-          </p>
-        </a>
+    const toggleMenu = () => {
+      setIsOpen(!isOpen);
+    };
 
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Templates{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Explore starter templates for Next.js.
-          </p>
-        </a>
+    return (
+      <main className="font-sans antialiased text-gray-800">
+        <Menu isOpen={isOpen} />
+        <Navbar toggleMenu={toggleMenu} isOpen={isOpen} onLogoClick={() => scrollTo(homeRef)} />
 
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Deploy{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50 text-balance`}>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
-    </main>
-  );
-}
+        {/* Scroll Progress Bar */}
+        <motion.div className="h-1 bg-teal-500 fixed z-50" style={{ scaleX, transformOrigin: "0%" }} />
+
+        {/* Hero Section */}
+        <section ref={homeRef} className="relative flex items-center justify-center min-h-screen">
+          <Image id='navs'
+            src="https://ncube.com/wp-content/uploads/2020/02/Top-8-Software-Development-Models.jpg"
+            alt="Software Development Models"
+            layout="fill"
+            objectFit="cover"
+            className="absolute z-0"
+          />
+          <div className="relative z-10 backdrop-blur-sm bg-white/30 p-10 rounded-xl text-center shadow-xl">
+            <Reveal>
+              <h1 className="text-6xl font-bold text-teal-200">Hey, I'm Parika.</h1>
+              <h2 className="mt-4 text-4xl font-bold text-gray-800">Full-Stack Developer</h2>
+              <p className="mt-4 text-lg text-teal-300">
+                Crafting beautiful applications with React.js, Node.js, and more. Design enthusiast and a learner for life.
+              </p>
+              <motion.button
+                type="button"
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                className="mt-6 bg-teal-500 text-white font-medium px-8 py-3 rounded-lg shadow hover:bg-teal-600 transition-colors"
+                onClick={() => scrollTo(contactRef)}
+              >
+                Get to know me!
+              </motion.button>
+            </Reveal>
+          </div>
+        </section>
+
+        {/* About Section */}
+        <section className="bg-gray-100 py-12">
+          <div className="container mx-auto px-8">
+            <Reveal>
+              <h2 className="text-5xl font-bold text-gray-800">About Me</h2>
+            </Reveal>
+            <div className="mt-6 space-y-6 text-lg text-gray-600">
+              <Reveal>
+                <p>
+                I am a jr. software developer with a strong knack for coding and technology. I constantly strive to gain new experience among new trends and technologies.
+                </p>
+              </Reveal>
+              <Reveal>
+                <p>
+                  Skills include: Python, C#, Java, React.js, Node.js, and Next.js, with a strong foundation in HTML, CSS, JavaScript, and strong background in backend development.
+                </p>
+              </Reveal>
+              <Reveal>
+              
+          <span className=" text-teal-400 flex flex-row gap-2">My Links <FaArrowRight className=" relative top-1" /></span>
+          <div className=" relative flex flex-row gap-2 top-1">
+          <a href="https://www.linkedin.com/in/parika-singh-038127260/" target="_blank"><FaLinkedin className=" ease-in-out duration-200 hover:text-teal-400"/></a>
+          <a href="https://github.com/parika054" target="_blank"><FaGithub className=" ease-in-out duration-200 hover:text-teal-400"/></a>
+                </div>
+              </Reveal>
+            </div>
+          </div>
+        </section>
+       
+
+        {/* Contact Section */}
+        <section ref={contactRef} className="bg-teal-500 text-white py-12">
+          <div className="container mx-auto px-8 text-center">
+            <Reveal>
+              <h2 className="text-5xl font-bold">Get In Touch</h2>
+            </Reveal>
+            <Reveal>
+              <p className="mt-4 text-lg">
+                Interested in collaborating or discussing a project? Feel free to reach out to me.
+              </p>
+            </Reveal>
+            <Reveal>
+              <a href="mailto:parika054@gmail.com" className="mt-6 inline-block bg-white text-teal-500 font-medium px-8 py-3 rounded-lg shadow hover:bg-gray-200 transition-colors">
+                <IoMail className="inline-block mr-2 text-2xl" />
+                parika054@gmail.com
+              </a>
+            </Reveal>
+          </div>
+        </section>
+      </main>
+    );
+  }
