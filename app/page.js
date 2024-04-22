@@ -48,7 +48,7 @@
           />
           <div className="relative z-10 backdrop-blur-sm bg-white/30 p-10 rounded-xl text-center shadow-xl">
             <Reveal>
-              <h1 className="text-6xl font-bold text-teal-200">Hey, I'm Parika.</h1>
+              <h1 className="text-6xl font-bold text-teal-200">Hey, I am Parika.</h1>
               <h2 className="mt-4 text-4xl font-bold text-gray-800">Full-Stack Developer</h2>
               <p className="mt-4 text-lg text-teal-300">
                 Crafting beautiful applications with React.js, Node.js, and more. Design enthusiast and a learner for life.
