@@ -14,7 +14,7 @@ function Menu({ isOpen }) {
          
           <MenuItem label="RESUME" href="/Technical_Resume_Parika.pdf" />
           <MenuItem label="CONTACT" active={activePage === "contact"} onClick={() => handleActivePage("contact")} href="mailto:parika054@gmail.com" />
-          <MenuItem label="SKILLS" active={activePage === "skills"} onClick={() => handleActivePage("skills")} href="./components" />
+          <MenuItem label="SKILLS & LATEST TECH NEWS" active={activePage === "skills"} onClick={() => handleActivePage("skills")} href="./components" />
         </nav>
       </div>
     </div>

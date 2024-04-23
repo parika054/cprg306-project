@@ -1,15 +1,44 @@
-import React from "react";
+"use client";
+
+import React, { useState, useEffect } from "react";
 import Image from "next/image";
 
 export default function Skills() {
+  const [articles, setArticles] = useState([]);
+  const [currentArticleIndex, setCurrentArticleIndex] = useState(0);
+
+  useEffect(() => {
+    const fetchNews = async () => {
+      const apiKey = 'cba5538c3d54445680bc4719f2105f2f';  // Your API key
+      const url = `https://newsapi.org/v2/top-headlines?country=us&category=technology&apiKey=${apiKey}`;
+
+      try {
+        const response = await fetch(url);
+        const json = await response.json();
+        setArticles(json.articles);
+      } catch (error) {
+        console.error("Error fetching news:", error);
+      }
+    };
+
+    fetchNews();
+  }, []);
+
+  const nextArticle = () => {
+    setCurrentArticleIndex((prevIndex) => (prevIndex + 1) % articles.length);
+  };
+
+  const previousArticle = () => {
+    setCurrentArticleIndex((prevIndex) => (prevIndex - 1 + articles.length) % articles.length);
+  };
+
   return (
-    <div id="skills" className="w-full lg:h-screen bg-teal-300 text-white">
-      <div className="max-w-[1080px] mx-auto flex flex-col justify-center h-full py-20 ">
-        <p className="my-4 text-3xl sm:text-5xl md:text-6xl font-serif font-medium text-blue-950">
+    <div id="skills" className="bg-teal-300 text-white">
+      <div className="max-w-[1080px] mx-auto flex flex-col justify-center py-20">
+        <p className="text-3xl sm:text-5xl md:text-6xl font-serif font-medium text-blue-950 mb-11">
           Skills
         </p>
-
-        <div className="bg-teal-300 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 px-4 mb-11">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 px-4 mb-11">
           {[
             { src: "/assets/skills/html.png", alt: "HTML", label: "HTML" },
             { src: "/assets/skills/css.png", alt: "CSS", label: "CSS" },
@@ -37,6 +66,30 @@ export default function Skills() {
               </div>
             </div>
           ))}
+        </div>
+      </div>
+      <div className="bg-blue-950 text-white">
+        <div className="max-w-[1080px] mx-auto flex flex-col justify-center py-20 px-4">
+          <p className="text-4xl font-serif font-medium my-4">
+            Latest Tech News
+          </p>
+          <ul className="text-xl">
+            {articles.length > 0 && (
+              <li>
+                <a href={articles[currentArticleIndex].url} target="_blank" rel="noopener noreferrer" className="hover:underline">
+                  {articles[currentArticleIndex].title}
+                </a>
+              </li>
+            )}
+            <div>
+              <button onClick={previousArticle} disabled={articles.length <= 1} className="mr-4">
+                Previous
+              </button>
+              <button onClick={nextArticle} disabled={articles.length <= 1}>
+                Next
+              </button>
+            </div>
+          </ul>
         </div>
       </div>
     </div>
