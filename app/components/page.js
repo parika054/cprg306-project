@@ -14,6 +14,7 @@ export default function Skills() {
       try {
         const response = await fetch(url);
         const json = await response.json();
+        console.log(json.articles);
         if (json.articles) {
           setArticles(json.articles);
         }
