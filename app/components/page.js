@@ -1,5 +1,4 @@
 "use client";
-
 import React, { useState, useEffect } from "react";
 import Image from "next/image";
 
@@ -15,7 +14,9 @@ export default function Skills() {
       try {
         const response = await fetch(url);
         const json = await response.json();
-        setArticles(json.articles);
+        if (json.articles) {
+          setArticles(json.articles);
+        }
       } catch (error) {
         console.error("Error fetching news:", error);
       }
@@ -25,11 +26,15 @@ export default function Skills() {
   }, []);
 
   const nextArticle = () => {
-    setCurrentArticleIndex((prevIndex) => (prevIndex + 1) % articles.length);
+    if (articles.length > 1) {
+      setCurrentArticleIndex((prevIndex) => (prevIndex + 1) % articles.length);
+    }
   };
 
   const previousArticle = () => {
-    setCurrentArticleIndex((prevIndex) => (prevIndex - 1 + articles.length) % articles.length);
+    if (articles.length > 1) {
+      setCurrentArticleIndex((prevIndex) => (prevIndex - 1 + articles.length) % articles.length);
+    }
   };
 
   return (
@@ -74,21 +79,21 @@ export default function Skills() {
             Latest Tech News
           </p>
           <ul className="text-xl">
-            {articles.length > 0 && (
+            {articles.length > 0 ? (
               <li>
                 <a href={articles[currentArticleIndex].url} target="_blank" rel="noopener noreferrer" className="hover:underline">
                   {articles[currentArticleIndex].title}
                 </a>
+                <div>
+                  <button onClick={previousArticle} disabled={articles.length <= 1} className="mr-4">
+                    Previous
+                  </button>
+                  <button onClick={nextArticle} disabled={articles.length <= 1}>
+                    Next
+                  </button>
+                </div>
               </li>
-            )}
-            <div>
-              <button onClick={previousArticle} disabled={articles.length <= 1} className="mr-4">
-                Previous
-              </button>
-              <button onClick={nextArticle} disabled={articles.length <= 1}>
-                Next
-              </button>
-            </div>
+            ) : <p>No news available.</p>}
           </ul>
         </div>
       </div>
